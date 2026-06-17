@@ -1,0 +1,24 @@
+//#region src/cache.ts
+var e = class {
+	constructor(e) {
+		this.cache = /* @__PURE__ */ new Map(), this.maxSize = e?.maxSize;
+	}
+	get(e) {
+		return this.cache.get(e);
+	}
+	set(e, t) {
+		if (this.maxSize && this.maxSize > 0 && this.cache.size >= this.maxSize) {
+			let e = this.cache.keys().next().value;
+			this.cache.delete(e);
+		}
+		this.cache.set(e, t);
+	}
+	clear() {
+		this.cache.clear();
+	}
+	size() {
+		return this.cache.size;
+	}
+};
+//#endregion
+export { e as default };
