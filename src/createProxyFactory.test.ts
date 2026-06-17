@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import createProxyFactory from './createProxyFactory';
 import type { MustelProxy } from './types';
@@ -63,5 +64,30 @@ describe('createProxyFactory', () => {
     symbolProxy();
 
     expect(fabric).toHaveBeenCalledWith('root.Symbol(custom)');
+  });
+
+  describe('Array Access - Nested and Multi-dimensional', () => {
+    it.each([
+      {
+        name: 'array in middle of nested path',
+        factory: createProxyFactory<Record<string, { item: string }[]>>(fabric),
+        path: 'data',
+        access: (proxy: any) => proxy.list[0].item,
+        expected: 'data.list.0.item',
+      },
+      {
+        name: 'nested arrays (2D)',
+        factory: createProxyFactory<{ value: number }[][]>(fabric),
+        path: 'grid',
+        access: (proxy: any) => proxy[0][1].value,
+        expected: 'grid.0.1.value',
+      },
+    ])('should support $name', ({ factory, path, access, expected }) => {
+      const proxy = factory(path);
+
+      access(proxy).toString();
+
+      expect(fabric).toHaveBeenCalledWith(expected);
+    });
   });
 });

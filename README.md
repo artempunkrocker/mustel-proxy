@@ -80,6 +80,47 @@ pushNotifications.enabled(); // 'notifications.push.enabled'
 const emailSent: string = email.sent; // ✓ Valid
 ```
 
+### Array Access
+
+Support for bracket notation to access array elements with full type safety:
+
+```typescript
+import mustelProxy from 'mustel-proxy';
+
+interface Translations {
+  items: Array<{
+    name: string;
+    description: string;
+  }>;
+  users: Array<{
+    id: string;
+    roles: Array<{
+      name: string;
+      permissions: string[];
+    }>;
+  }>;
+}
+
+const t = (key: string) => key;
+const locale = mustelProxy<Translations>(t);
+
+// Array at end of path
+locale.items[0](); // 'items.0'
+
+// Array element navigation
+locale.items[0].name(); // 'items.0.name'
+locale.items[0].description(); // 'items.0.description'
+
+// Nested arrays (multi-dimensional)
+locale.users[2].roles[1].name(); // 'users.2.roles.1.name'
+
+// Array properties work as expected
+locale.items.length(); // 'items.length'
+
+// Type safety maintained
+const itemName: string = locale.items[0].name(); // ✓ Valid
+```
+
 ### Primitive Conversion
 
 Convert to string using `toString()` or `valueOf()`:

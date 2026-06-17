@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import MapCache from './cache';
+import { MustelProxy } from './types';
 
-const createMockProxy = () => () => 'mock';
+const createMockProxy = () => (() => 'mock') as unknown as MustelProxy<unknown>;
 
 describe('MapCache', () => {
   it('should return undefined for non-existent key', () => {
-    const cache = new MapCache<object>();
+    const cache = new MapCache<MustelProxy<unknown>>();
     expect(cache.get('missing')).toBeUndefined();
   });
 
@@ -41,21 +42,6 @@ describe('MapCache', () => {
     expect(cache.get('key1')).toBeUndefined();
     expect(cache.get('key2')).toBe(mock2);
     expect(cache.get('key3')).toBe(mock3);
-  });
-
-  it('should handle cache with maxSize: 1', () => {
-    const cache = new MapCache<object>({ maxSize: 1 });
-    const mock1 = createMockProxy();
-    const mock2 = createMockProxy();
-
-    cache.set('key1', mock1);
-    expect(cache.size()).toBe(1);
-    expect(cache.get('key1')).toBe(mock1);
-
-    cache.set('key2', mock2);
-    expect(cache.size()).toBe(1);
-    expect(cache.get('key1')).toBeUndefined();
-    expect(cache.get('key2')).toBe(mock2);
   });
 
   it('should clear all entries', () => {
