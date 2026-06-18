@@ -8,6 +8,7 @@ export default {
       '@semantic-release/npm',
       {
         npmPublish: true,
+        npmRegistry: 'https://registry.npmjs.org',
       },
     ],
     [
