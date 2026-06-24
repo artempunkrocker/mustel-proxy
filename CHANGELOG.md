@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/artempunkrocker/mustel-proxy/compare/v1.0.2...v1.0.3) (2026-06-24)
+
+
+### Bug Fixes
+
+* Trigger release ([74d9e15](https://github.com/artempunkrocker/mustel-proxy/commit/74d9e15130df30eee7abe6aa7d538a945c81950a))
+
 ## [1.0.2](https://github.com/artempunkrocker/mustel-proxy/compare/v1.0.1...v1.0.2) (2026-06-18)
 
 

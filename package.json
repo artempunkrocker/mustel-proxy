@@ -1,6 +1,6 @@
 {
   "name": "mustel-proxy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "description": "Type-safe proxy with dot-notation navigation",
   "main": "./dist/index.cjs",
